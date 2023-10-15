@@ -12,4 +12,6 @@ itsdangerous==1.1.0
 MarkupSafe==2.0.1
 Werkzeug==1.0.1
 xgboost==0.90
+dill
+catboost
 # -e .
