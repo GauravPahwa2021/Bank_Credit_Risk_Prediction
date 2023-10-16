@@ -40,7 +40,6 @@ class dataBaseOperation:
             logging.info('INFO', 'Using The Keyspace That We Created At Time of Database Creating')
             self.session.execute("USE {keyspace};".format(keyspace=self.keyspace))
 
-            # print('Using The energy Keyspace')
             logging.info('INFO', 'The {keyspace} Is Selected'.format(keyspace=self.keyspace))
 
         except Exception as e:
@@ -50,7 +49,7 @@ class dataBaseOperation:
 
         try:
 
-            logger.info('INFO', 'Table Is Creating Inside The Selected Keyspace')
+            logging.info('INFO', 'Table Is Creating Inside The Selected Keyspace')
             self.session.execute("USE {keyspace};".format(keyspace=self.keyspace))
 
             self.session.execute(
@@ -60,19 +59,17 @@ class dataBaseOperation:
                 "housing int, number_credits int, job int, people_liable int, telephone int,foreign_worker int,"
                 "credit_risk int);".format(table_name=self.table_name))
 
-            # print('Table Is Created Inside The Keyspace')
-
-            logger.info('INFO', 'The Table Is Created Inside The {keyspace} With Name {table_name}'.format(
+            logging.info('INFO', 'The Table Is Created Inside The {keyspace} With Name {table_name}'.format(
                         keyspace=self.keyspace, table_name=self.table_name))
 
         except Exception as e:
-            raise Exception(f"(createTable) - Their Is Something Wrong About Creating Table Method \n" + str(e))
+            raise CustomException(e,sys)
 
     def insertintotable(self):
 
         try:
 
-            logger.info('INFO', 'Inserting The Data Into DATABASE')
+            logging.info('INFO', 'Inserting The Data Into DATABASE')
             file = "SouthGermanCredit\SouthGermanCredit.csv"
             with open(file, mode='r') as f:
                 next(f)
@@ -89,18 +86,17 @@ class dataBaseOperation:
                         "property,age,other_installment_plans,housing,number_credits,job,people_liable,telephone,"
                         "foreign_worker,credit_risk) VALUES ({data});".format(table_name=self.table_name, data=data))
 
-                # print('Data Is Inseted')
-                logger.info('INFO', 'All The Data Entered Into The {keyspace} Having Table Name {table_name}'.
+                logging.info('INFO', 'All The Data Entered Into The {keyspace} Having Table Name {table_name}'.
                             format(keyspace=self.keyspace, table_name=self.table_name))
 
         except Exception as e:
-            raise Exception(f"(insertintotable) - Their Is Something Wrong About Insert Into Data Method \n" + str(e))
+            raise CustomException(e,sys)
 
     def getdatafromdatabase(self):
 
         try:
 
-            logger.info('INFO', 'Trying To Get The Data From The DataBase')
+            logging.info('INFO', 'Trying To Get The Data From The DataBase')
             df = pd.DataFrame()
 
             query = "SELECT * FROM {keyspace}.{table_name};".format(keyspace=self.keyspace, table_name=self.table_name)
@@ -108,6 +104,7 @@ class dataBaseOperation:
 
                 df = df.append(pd.DataFrame([row]))
 
-            logger.info('INFO', 'We Gathered The Data From DataBase {}'.format(df))
+            logging.info('INFO', 'We Gathered The Data From DataBase {}'.format(df))
+            
         except Exception as e:
-            raise Exception(f"(getData) - Their Is Something Wrong About getData Method \n" + str(e))
+            raise CustomException(e,sys)
