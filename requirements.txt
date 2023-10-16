@@ -15,4 +15,5 @@ xgboost==0.90
 dill
 catboost
 astropy
+cassandra-driver
 # -e .
